@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexaTech Solutions | IT Consulting & Security Services</title>
+    <title>El | DevOps Engineer & Cloud Architect</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0a0a0f;
-            --secondary: #12121a;
-            --accent: #00d4aa;
-            --accent-glow: rgba(0, 212, 170, 0.3);
-            --accent-secondary: #7c3aed;
-            --text: #e4e4e7;
-            --text-muted: #71717a;
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #161616;
+            --bg-tertiary: #1a1a1a;
+            --accent: #22d3ee;
+            --accent-secondary: #f472b6;
+            --accent-glow: rgba(34, 211, 238, 0.25);
+            --text: #fafafa;
+            --text-muted: #a3a3a3;
+            --text-dim: #525252;
             --border: rgba(255, 255, 255, 0.08);
-            --gradient-1: linear-gradient(135deg, #00d4aa 0%, #7c3aed 100%);
-            --gradient-2: linear-gradient(180deg, rgba(0, 212, 170, 0.1) 0%, transparent 50%);
+            --gradient: linear-gradient(135deg, #22d3ee 0%, #f472b6 100%);
         }
 
         * {
@@ -32,49 +33,48 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--primary);
+            font-family: 'Syne', sans-serif;
+            background: var(--bg-primary);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        /* Animated background */
-        .bg-grid {
+        /* Cursor effect */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, opacity 0.3s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        /* Noise overlay */
+        .noise {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 212, 170, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 170, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
             pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-glow-1 {
-            top: -200px;
-            right: -100px;
-            background: var(--accent);
-        }
-
-        .bg-glow-2 {
-            bottom: -200px;
-            left: -100px;
-            background: var(--accent-secondary);
+            z-index: 1000;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
         /* Navigation */
@@ -83,25 +83,24 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
+            z-index: 100;
             padding: 1.5rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             backdrop-filter: blur(20px);
-            background: rgba(10, 10, 15, 0.8);
+            background: rgba(13, 13, 13, 0.8);
             border-bottom: 1px solid var(--border);
         }
 
         .logo {
-            font-family: 'Space Mono', monospace;
+            font-family: 'IBM Plex Mono', monospace;
             font-size: 1.5rem;
-            font-weight: 700;
-            background: var(--gradient-1);
+            font-weight: 600;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -1px;
         }
 
         .nav-links {
@@ -113,20 +112,21 @@
         .nav-links a {
             color: var(--text-muted);
             text-decoration: none;
+            font-size: 0.9rem;
             font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
             position: relative;
         }
 
-        .nav-links a::after {
+        .nav-links a::before {
             content: '';
             position: absolute;
             bottom: -4px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-1);
+            background: var(--gradient);
             transition: width 0.3s ease;
         }
 
@@ -134,141 +134,198 @@
             color: var(--text);
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::before {
             width: 100%;
         }
 
-        .nav-cta {
-            padding: 0.75rem 1.5rem;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 8px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .nav-social {
+            display: flex;
+            gap: 1rem;
         }
 
-        .nav-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px var(--accent-glow);
+        .nav-social a {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .nav-social a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s ease;
         }
 
         /* Hero Section */
         .hero {
-            position: relative;
             min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 8rem 4rem 4rem;
-            z-index: 1;
+            position: relative;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse at top right, rgba(34, 211, 238, 0.08) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         .hero-content {
-            max-width: 800px;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            text-align: center;
         }
 
-        .hero-badge {
+        .hero-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 212, 170, 0.1);
-            border: 1px solid rgba(0, 212, 170, 0.2);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--accent);
-            margin-bottom: 2rem;
+            gap: 1rem;
             animation: fadeInUp 0.8s ease;
         }
 
-        .hero-badge::before {
+        .hero-tag::before,
+        .hero-tag::after {
             content: '';
-            width: 8px;
-            height: 8px;
+            width: 40px;
+            height: 1px;
             background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 7vw, 5rem);
+            font-size: clamp(3.5rem, 8vw, 7rem);
             font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+            line-height: 1.05;
+            margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease 0.1s both;
         }
 
-        .hero h1 span {
-            background: var(--gradient-1);
+        .hero h1 .gradient {
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
-            font-size: 1.25rem;
+        .hero h1 .outline {
+            -webkit-text-stroke: 2px var(--text);
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.2rem;
             color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
             animation: fadeInUp 0.8s ease 0.2s both;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 1rem;
+            justify-content: center;
+            gap: 1.5rem;
             animation: fadeInUp 0.8s ease 0.3s both;
         }
 
-        .btn-primary {
-            padding: 1rem 2rem;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 10px;
-            color: var(--primary);
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
             text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: var(--bg-primary);
+            border: none;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 20px 50px var(--accent-glow);
+            box-shadow: 0 20px 40px var(--accent-glow);
         }
 
         .btn-secondary {
-            padding: 1rem 2rem;
             background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 10px;
             color: var(--text);
-            font-weight: 500;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            border: 1px solid var(--border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
             border-color: var(--accent);
+            background: rgba(34, 211, 238, 0.05);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; height: 60px; }
+            50% { opacity: 0.5; height: 40px; }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -276,429 +333,566 @@
             }
         }
 
-        /* Stats */
-        .stats {
-            display: flex;
-            gap: 4rem;
-            margin-top: 5rem;
-            padding-top: 3rem;
-            border-top: 1px solid var(--border);
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .stat {
-            text-align: left;
-        }
-
-        .stat-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
-        }
-
-        /* Services Section */
-        .services {
-            position: relative;
+        /* About Section */
+        .about {
             padding: 8rem 4rem;
-            z-index: 1;
+            position: relative;
         }
 
         .section-header {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
             margin-bottom: 4rem;
         }
 
-        .section-tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.85rem;
+        .section-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
             color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
         }
 
         .section-title {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 700;
-            margin-bottom: 1rem;
         }
 
-        .section-desc {
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
         }
 
-        .services-grid {
+        .about-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
         }
 
-        .service-card {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2.5rem;
-            transition: all 0.4s ease;
+        .about-image {
             position: relative;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: var(--bg-secondary);
+            border-radius: 20px;
             overflow: hidden;
         }
 
-        .service-card::before {
+        .about-image-wrapper::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-1);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0.1;
         }
 
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0, 212, 170, 0.3);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        .about-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .service-card:hover::before {
-            transform: scaleX(1);
+        .about-image-frame {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            right: -2rem;
+            bottom: -2rem;
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            z-index: -1;
         }
 
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 212, 170, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .about-content h3 {
             font-size: 1.75rem;
             margin-bottom: 1.5rem;
         }
 
-        .service-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .service-card p {
+        .about-content p {
             color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* VPN Promo Section */
-        .vpn-promo {
-            position: relative;
-            padding: 6rem 4rem;
-            z-index: 1;
-        }
-
-        .vpn-card {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(0, 212, 170, 0.2) 100%);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 24px;
-            padding: 4rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .vpn-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(124, 58, 237, 0.3) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .vpn-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: #a78bfa;
             margin-bottom: 1.5rem;
+            font-size: 1.05rem;
         }
 
-        .vpn-content h2 {
-            font-size: clamp(2rem, 4vw, 2.75rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .vpn-content h2 span {
-            color: var(--accent);
-        }
-
-        .vpn-content p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .vpn-features {
+        .about-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
         }
 
-        .vpn-feature {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .vpn-feature svg {
-            width: 20px;
-            height: 20px;
-            color: var(--accent);
-            flex-shrink: 0;
-        }
-
-        .vpn-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .vpn-counter {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 3rem;
+        .stat-item {
             text-align: center;
-            position: relative;
         }
 
-        .vpn-counter::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: var(--gradient-1);
-            border-radius: 22px;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        .counter-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-
-        .counter-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 4rem;
+        .stat-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 2.5rem;
             font-weight: 700;
-            background: var(--gradient-1);
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .counter-subtext {
-            font-size: 1.1rem;
-            color: var(--text);
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
             margin-top: 0.5rem;
         }
 
-        .counter-note {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-        }
-
-        /* Contact Form Section */
-        .contact {
-            position: relative;
+        /* Skills Section */
+        .skills {
             padding: 8rem 4rem;
-            z-index: 1;
+            background: var(--bg-secondary);
         }
 
-        .contact-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-form {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 3rem;
-        }
-
-        .form-row {
+        .skills-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group:last-of-type {
-            margin-bottom: 2rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            color: var(--text);
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: var(--primary);
+        .skill-category {
+            background: var(--bg-tertiary);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-family: 'Outfit', sans-serif;
-            font-size: 1rem;
+            border-radius: 16px;
+            padding: 2rem;
             transition: all 0.3s ease;
         }
 
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .skill-category h4 {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .skill-category h4 span {
+            font-size: 1.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 8rem 4rem;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: var(--bg-tertiary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0.2;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            padding: 0.35rem 0.75rem;
+            background: rgba(244, 114, 182, 0.1);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: var(--accent-secondary);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .project-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 8rem 4rem;
+            background: var(--bg-secondary);
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 3rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 165px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 160px;
+            top: 2.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .timeline-date {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .timeline-content h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .company {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 4rem;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-email {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 1rem 2rem;
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+        }
+
+        .contact-email:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .contact-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-social a {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .contact-social a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* CV Download Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(34, 211, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .modal-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--accent);
+        }
+
+        .modal h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            text-align: center;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: var(--text-muted);
+        .modal-input.error {
+            border-color: #ef4444;
+            animation: shake 0.5s ease;
         }
 
-        .form-select {
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .modal-error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .modal-error.show {
+            display: block;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1.25rem;
-            padding-right: 3rem;
+            transition: all 0.3s ease;
+            border: none;
         }
 
-        .form-select option {
-            background: var(--secondary);
+        .modal-btn-primary {
+            background: var(--gradient);
+            color: var(--bg-primary);
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
             color: var(--text);
         }
 
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
+        .modal-btn-secondary:hover {
+            border-color: var(--text-muted);
         }
 
-        .form-checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-checkbox {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent);
-            cursor: pointer;
-            margin-top: 2px;
-        }
-
-        .form-checkbox-label {
-            font-size: 0.9rem;
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 50%;
             color: var(--text-muted);
             cursor: pointer;
-        }
-
-        .form-checkbox-label a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .form-checkbox-label a:hover {
-            text-decoration: underline;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 1.25rem 2rem;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 12px;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            transition: all 0.3s ease;
         }
 
-        .form-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px var(--accent-glow);
+        .modal-close:hover {
+            border-color: var(--text);
+            color: var(--text);
         }
 
-        .form-submit:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Success Message */
-        .success-message {
+        /* Success state */
+        .modal-success {
             display: none;
-            text-align: center;
-            padding: 3rem;
         }
 
-        .success-message.show {
+        .modal-success.show {
             display: block;
-            animation: fadeInUp 0.5s ease;
+        }
+
+        .modal-form.hide {
+            display: none;
         }
 
         .success-icon {
             width: 80px;
             height: 80px;
-            background: rgba(0, 212, 170, 0.1);
+            background: rgba(34, 211, 238, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -712,39 +906,18 @@
             color: var(--accent);
         }
 
-        .success-message h3 {
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .success-message p {
-            color: var(--text-muted);
-        }
-
         /* Footer */
         footer {
-            position: relative;
-            padding: 4rem;
+            padding: 3rem 4rem;
             border-top: 1px solid var(--border);
-            z-index: 1;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .footer-logo {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.25rem;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .footer-copy {
+            color: var(--text-dim);
+            font-size: 0.9rem;
         }
 
         .footer-links {
@@ -763,20 +936,16 @@
             color: var(--accent);
         }
 
-        .footer-copy {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
         /* Responsive */
         @media (max-width: 1024px) {
-            .vpn-card {
+            .about-grid {
                 grid-template-columns: 1fr;
-                text-align: center;
+                gap: 4rem;
             }
 
-            .vpn-features {
-                justify-content: center;
+            .about-image {
+                max-width: 400px;
+                margin: 0 auto;
             }
         }
 
@@ -785,8 +954,12 @@
                 padding: 1rem 2rem;
             }
 
-            .nav-links {
+            .nav-links, .nav-social {
                 display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
             }
 
             .hero {
@@ -795,402 +968,587 @@
 
             .hero-buttons {
                 flex-direction: column;
+                align-items: center;
             }
 
-            .stats {
-                flex-direction: column;
-                gap: 2rem;
+            .hero-scroll {
+                display: none;
             }
 
-            .services,
-            .vpn-promo,
-            .contact {
+            .about, .skills, .portfolio, .experience, .contact {
                 padding: 4rem 2rem;
             }
 
-            .vpn-card {
-                padding: 2rem;
+            .about-stats {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
             }
 
-            .vpn-features {
+            .stat-number {
+                font-size: 1.75rem;
+            }
+
+            .timeline-item {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+                padding-left: 2rem;
             }
 
-            .form-row {
+            .timeline-item::before {
+                left: 0;
+            }
+
+            .timeline-item::after {
+                left: -5px;
+            }
+
+            .portfolio-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .contact-form {
-                padding: 2rem;
             }
 
             footer {
-                padding: 2rem;
-            }
-
-            .footer-content {
                 flex-direction: column;
-                gap: 2rem;
+                gap: 1.5rem;
                 text-align: center;
             }
 
-            .footer-links {
-                flex-wrap: wrap;
-                justify-content: center;
+            .cursor, .cursor-follower {
+                display: none;
             }
-        }
-
-        /* Loading spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-        }
-
-        .form-submit.loading .spinner {
-            display: block;
-        }
-
-        .form-submit.loading .btn-text {
-            display: none;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Background effects -->
-    <div class="bg-grid"></div>
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
+    <!-- Noise overlay -->
+    <div class="noise"></div>
+
+    <!-- Custom cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
 
     <!-- Navigation -->
     <nav>
-        <div class="logo">NEXATECH</div>
+        <div class="logo">&lt;EL /&gt;</div>
         <ul class="nav-links">
-            <li><a href="#services">Services</a></li>
-            <li><a href="#vpn">Free VPN</a></li>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#experience">Experience</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="nav-cta" onclick="scrollToContact()">Get Started</button>
+        <div class="nav-social">
+            <a href="https://github.com/" target="_blank" aria-label="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+        </div>
+        <div class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">
-                <span>Now offering free VPN for first 100 clients</span>
-            </div>
-            <h1>Transform Your Business with <span>Expert IT Solutions</span></h1>
-            <p>We deliver cutting-edge IT consulting, cybersecurity, and infrastructure solutions that drive growth and protect your digital assets.</p>
+            <div class="hero-tag">Available for opportunities</div>
+            <h1>
+                Hi, I'm <span class="gradient">El</span><br>
+                <span class="outline">DevOps</span> Engineer<br>
+                & Cloud Architect
+            </h1>
+            <p class="hero-desc">
+                I specialize in building robust cloud infrastructure, automating deployments, 
+                and implementing security-first solutions. Passionate about Kubernetes, CI/CD pipelines, 
+                and making systems scalable and resilient.
+            </p>
             <div class="hero-buttons">
-                <a href="#contact" class="btn-primary">
-                    Request Consultation
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <a href="#contact" class="btn btn-primary">
+                    Get In Touch
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                 </a>
-                <a href="#services" class="btn-secondary">Explore Services</a>
+                <button class="btn btn-secondary" onclick="openCVModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download CV
+                </button>
             </div>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number">150+</div>
-                    <div class="stat-label">Projects Delivered</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Client Satisfaction</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support Available</div>
-                </div>
-            </div>
+        </div>
+        <div class="hero-scroll">
+            <div class="scroll-line"></div>
+            <span>Scroll to explore</span>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
+    <!-- About Section -->
+    <section class="about" id="about">
         <div class="section-header">
-            <div class="section-tag">Our Expertise</div>
-            <h2 class="section-title">Comprehensive IT Solutions</h2>
-            <p class="section-desc">From strategy to implementation, we provide end-to-end technology services tailored to your business needs.</p>
+            <span class="section-number">01</span>
+            <h2 class="section-title">About Me</h2>
+            <div class="section-line"></div>
         </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">🛡️</div>
-                <h3>Cybersecurity Solutions</h3>
-                <p>Protect your organization with advanced threat detection, penetration testing, and security audits. We implement robust defense strategies.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">☁️</div>
-                <h3>Cloud Infrastructure</h3>
-                <p>Seamless cloud migration and management across AWS, Azure, and GCP. Optimize costs while maximizing performance and scalability.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">⚙️</div>
-                <h3>DevOps & Automation</h3>
-                <p>Accelerate delivery with CI/CD pipelines, Kubernetes orchestration, and infrastructure as code. Reduce deployment time by up to 80%.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🔄</div>
-                <h3>Digital Transformation</h3>
-                <p>Modernize legacy systems and processes. We guide your digital journey with strategic planning and cutting-edge technology adoption.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">📊</div>
-                <h3>Data & Analytics</h3>
-                <p>Unlock insights from your data with advanced analytics, machine learning solutions, and real-time dashboards for informed decision-making.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🖥️</div>
-                <h3>Managed IT Services</h3>
-                <p>Focus on your core business while we handle your IT operations. 24/7 monitoring, maintenance, and support with guaranteed SLAs.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- VPN Promo Section -->
-    <section class="vpn-promo" id="vpn">
-        <div class="vpn-card">
-            <div class="vpn-content">
-                <div class="vpn-badge">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    Limited Time Offer
+        <div class="about-grid">
+            <div class="about-image">
+                <div class="about-image-wrapper">
+                    <!-- Placeholder for profile image -->
+                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:6rem;">👨‍💻</div>
                 </div>
-                <h2>Get <span>Free VPN</span> for 1 Year</h2>
-                <p>As a thank you for being among our first clients, we're offering our enterprise-grade VPN solution completely free for your first year.</p>
-                <div class="vpn-features">
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>256-bit AES Encryption</span>
-                    </div>
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>50+ Global Locations</span>
-                    </div>
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Zero-Log Policy</span>
-                    </div>
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Unlimited Bandwidth</span>
-                    </div>
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Kill Switch Protection</span>
-                    </div>
-                    <div class="vpn-feature">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        <span>Multi-Device Support</span>
-                    </div>
-                </div>
+                <div class="about-image-frame"></div>
             </div>
-            <div class="vpn-visual">
-                <div class="vpn-counter">
-                    <div class="counter-label">Spots Remaining</div>
-                    <div class="counter-number" id="vpnCounter">73</div>
-                    <div class="counter-subtext">out of 100</div>
-                    <div class="counter-note">Claim yours by signing up below</div>
+            <div class="about-content">
+                <h3>Building the future of cloud infrastructure</h3>
+                <p>
+                    I'm a DevOps Engineer and Cloud Architect with a passion for automation, 
+                    security, and scalable systems. My journey started with a curiosity about 
+                    how systems work under the hood, and evolved into expertise in container 
+                    orchestration, CI/CD pipelines, and infrastructure as code.
+                </p>
+                <p>
+                    Currently focused on Kubernetes (K3s), Jenkins pipelines, Elasticsearch 
+                    clusters, and security tooling like Fortify. I believe in building systems 
+                    that are not just functional, but maintainable, secure, and observable.
+                </p>
+                <p>
+                    When I'm not architecting cloud solutions, you'll find me gaming, 
+                    experimenting with new technologies, or contributing to open source projects.
+                </p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime Achieved</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Skills & Tools</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h4><span>☁️</span> Cloud Platforms</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Azure</span>
+                    <span class="skill-tag">GCP</span>
+                    <span class="skill-tag">DigitalOcean</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><span>🐳</span> Containers & Orchestration</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Docker</span>
+                    <span class="skill-tag">Kubernetes</span>
+                    <span class="skill-tag">K3s</span>
+                    <span class="skill-tag">Helm</span>
+                    <span class="skill-tag">Rancher</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><span>🔧</span> CI/CD & Automation</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Jenkins</span>
+                    <span class="skill-tag">GitHub Actions</span>
+                    <span class="skill-tag">GitLab CI</span>
+                    <span class="skill-tag">Ansible</span>
+                    <span class="skill-tag">Terraform</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><span>📊</span> Monitoring & Logging</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Elasticsearch</span>
+                    <span class="skill-tag">Prometheus</span>
+                    <span class="skill-tag">Grafana</span>
+                    <span class="skill-tag">ELK Stack</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><span>🔒</span> Security</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Fortify</span>
+                    <span class="skill-tag">SonarQube</span>
+                    <span class="skill-tag">Vault</span>
+                    <span class="skill-tag">OWASP</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h4><span>💻</span> Languages & Scripting</h4>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Bash</span>
+                    <span class="skill-tag">Go</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">YAML</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="portfolio-grid">
+            <div class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="project-tag">K3s</span>
+                        <span class="project-tag">Elasticsearch</span>
+                        <span class="project-tag">RAG</span>
+                    </div>
+                    <h3>RAG Platform Infrastructure</h3>
+                    <p>Designed and deployed a scalable RAG application infrastructure using K3s clusters with Elasticsearch for vector search and document retrieval.</p>
+                    <a href="#" class="project-link">
+                        View Project
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="project-tag">Jenkins</span>
+                        <span class="project-tag">Fortify</span>
+                        <span class="project-tag">Security</span>
+                    </div>
+                    <h3>Security Scanning Pipeline</h3>
+                    <p>Automated security scanning pipeline integrating Fortify SAST/DAST analysis into CI/CD workflows with comprehensive reporting.</p>
+                    <a href="#" class="project-link">
+                        View Project
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="project-tag">Android</span>
+                        <span class="project-tag">WireGuard</span>
+                        <span class="project-tag">VPN</span>
+                    </div>
+                    <h3>Shark VPN Application</h3>
+                    <p>Full-featured Android VPN application with interactive server map, WireGuard integration, and custom branding for enterprise clients.</p>
+                    <a href="#" class="project-link">
+                        View Project
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image"></div>
+                <div class="project-content">
+                    <div class="project-tags">
+                        <span class="project-tag">WebSocket</span>
+                        <span class="project-tag">IoT</span>
+                        <span class="project-tag">Security</span>
+                    </div>
+                    <h3>Smart Light Control System</h3>
+                    <p>WebSocket server for IoT light control with comprehensive security hardening, rate limiting, and attack prevention measures.</p>
+                    <a href="#" class="project-link">
+                        View Project
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Experience</h2>
+            <div class="section-line"></div>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2023 - Present</div>
+                <div class="timeline-content">
+                    <h4>Senior DevOps Consultant</h4>
+                    <div class="company">NexaTech Solutions</div>
+                    <p>Leading cloud infrastructure projects, implementing CI/CD pipelines, and architecting scalable Kubernetes deployments for enterprise clients.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2021 - 2023</div>
+                <div class="timeline-content">
+                    <h4>DevOps Engineer</h4>
+                    <div class="company">Cloud Innovations Inc.</div>
+                    <p>Managed AWS/Azure infrastructure, automated deployments with Terraform and Ansible, and implemented comprehensive monitoring solutions.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2019 - 2021</div>
+                <div class="timeline-content">
+                    <h4>Systems Administrator</h4>
+                    <div class="company">TechStart Solutions</div>
+                    <p>Administered Linux servers, implemented security policies, and began containerization initiatives with Docker.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
     <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="section-header">
-                <div class="section-tag">Get In Touch</div>
-                <h2 class="section-title">Request a Free Consultation</h2>
-                <p class="section-desc">Tell us about your project and we'll get back to you within 24 hours with a customized proposal.</p>
+        <div class="contact-content">
+            <div class="section-header" style="justify-content: center;">
+                <span class="section-number">05</span>
+                <h2 class="section-title">Get In Touch</h2>
             </div>
-            <div class="contact-form">
-                <form id="consultationForm">
-                    <div class="form-row">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="form-label" for="firstName">First Name *</label>
-                            <input type="text" id="firstName" class="form-input" placeholder="John" required>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="form-label" for="lastName">Last Name *</label>
-                            <input type="text" id="lastName" class="form-input" placeholder="Doe" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="form-label" for="email">Email Address *</label>
-                            <input type="email" id="email" class="form-input" placeholder="john@company.com" required>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label class="form-label" for="phone">Phone Number</label>
-                            <input type="tel" id="phone" class="form-input" placeholder="+1 (555) 123-4567">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="company">Company Name</label>
-                        <input type="text" id="company" class="form-input" placeholder="Acme Corporation">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="service">Service Interested In *</label>
-                        <select id="service" class="form-select" required>
-                            <option value="">Select a service...</option>
-                            <option value="cybersecurity">Cybersecurity Solutions</option>
-                            <option value="cloud">Cloud Infrastructure</option>
-                            <option value="devops">DevOps & Automation</option>
-                            <option value="digital">Digital Transformation</option>
-                            <option value="data">Data & Analytics</option>
-                            <option value="managed">Managed IT Services</option>
-                            <option value="multiple">Multiple Services</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="budget">Estimated Budget</label>
-                        <select id="budget" class="form-select">
-                            <option value="">Select budget range...</option>
-                            <option value="5k-15k">$5,000 - $15,000</option>
-                            <option value="15k-50k">$15,000 - $50,000</option>
-                            <option value="50k-100k">$50,000 - $100,000</option>
-                            <option value="100k+">$100,000+</option>
-                            <option value="discuss">Prefer to discuss</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="message">Project Details *</label>
-                        <textarea id="message" class="form-textarea" placeholder="Tell us about your project, goals, and any specific requirements..." required></textarea>
-                    </div>
-                    <div class="form-checkbox-group">
-                        <input type="checkbox" id="vpnInterest" class="form-checkbox">
-                        <label for="vpnInterest" class="form-checkbox-label">I'm interested in the free VPN offer for the first 100 clients</label>
-                    </div>
-                    <div class="form-checkbox-group">
-                        <input type="checkbox" id="terms" class="form-checkbox" required>
-                        <label for="terms" class="form-checkbox-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *</label>
-                    </div>
-                    <button type="submit" class="form-submit" id="submitBtn">
-                        <span class="btn-text">Submit Request</span>
-                        <div class="spinner"></div>
-                    </button>
-                </form>
-                <div class="success-message" id="successMessage">
-                    <div class="success-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                    <h3>Thank You!</h3>
-                    <p>Your consultation request has been received. Our team will contact you within 24 hours.</p>
-                </div>
+            <p>
+                I'm currently open to new opportunities and interesting projects. 
+                Whether you have a question or just want to say hi, feel free to reach out!
+            </p>
+            <a href="mailto:el@example.com" class="contact-email">el@example.com</a>
+            <div class="contact-social">
+                <a href="https://github.com/" target="_blank" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                <a href="https://twitter.com/" target="_blank" aria-label="Twitter">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-logo">NEXATECH</div>
-            <div class="footer-links">
-                <a href="#">About Us</a>
-                <a href="#">Careers</a>
-                <a href="#">Blog</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-            </div>
-            <div class="footer-copy">© 2026 NexaTech Solutions. All rights reserved.</div>
+        <div class="footer-copy">© 2026 El. All rights reserved.</div>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#contact">Contact</a>
         </div>
     </footer>
 
-    <script>
-        // Smooth scroll to contact section
-        function scrollToContact() {
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-        }
+    <!-- CV Download Modal -->
+    <div class="modal-overlay" id="cvModal">
+        <div class="modal">
+            <div class="modal-form" id="modalForm">
+                <div class="modal-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <h3>Password Protected</h3>
+                <p>Enter the password to download my CV. Contact me if you need access.</p>
+                <input type="password" class="modal-input" id="cvPassword" placeholder="••••••••" maxlength="20" autocomplete="off">
+                <div class="modal-error" id="modalError">Incorrect password. Please try again.</div>
+                <div class="modal-buttons">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeCVModal()">Cancel</button>
+                    <button class="modal-btn modal-btn-primary" onclick="verifyPassword()">Download</button>
+                </div>
+            </div>
+            <div class="modal-success" id="modalSuccess">
+                <div class="success-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+                <h3>Access Granted!</h3>
+                <p>Your download will start automatically.</p>
+            </div>
+        </div>
+    </div>
 
-        // Form handling - simulates submission without actually sending data
-        document.getElementById('consultationForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const form = this;
-            const successMessage = document.getElementById('successMessage');
-            
-            // Add loading state
-            submitBtn.classList.add('loading');
-            submitBtn.disabled = true;
-            
-            // Simulate processing time (form doesn't actually submit anywhere)
-            setTimeout(() => {
-                // Hide form and show success message
-                form.style.display = 'none';
-                successMessage.classList.add('show');
-                
-                // Update VPN counter
-                const counter = document.getElementById('vpnCounter');
-                let currentCount = parseInt(counter.textContent);
-                if (currentCount > 0 && document.getElementById('vpnInterest').checked) {
-                    counter.textContent = currentCount - 1;
-                }
-                
-                // Log form data to console (for demo purposes)
-                console.log('Form submitted (demo only - no data sent):', {
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    company: document.getElementById('company').value,
-                    service: document.getElementById('service').value,
-                    budget: document.getElementById('budget').value,
-                    message: document.getElementById('message').value,
-                    vpnInterest: document.getElementById('vpnInterest').checked
-                });
-            }, 1500);
+    <script>
+        // ============================================
+        // CV PASSWORD CONFIGURATION
+        // Change this password to your own
+        // ============================================
+        const CV_PASSWORD = "devops2026";
+        // ============================================
+        
+        // CV file path - update this to your actual CV file
+        const CV_FILE_PATH = "cv/El_CV.pdf";
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // Animate VPN counter on scroll
-        let counterAnimated = false;
-        const vpnSection = document.getElementById('vpn');
-        
-        function animateCounter() {
-            const counter = document.getElementById('vpnCounter');
-            const target = 73;
-            let current = 100;
-            
-            const interval = setInterval(() => {
-                current--;
-                counter.textContent = current;
-                if (current <= target) {
-                    clearInterval(interval);
-                }
-            }, 30);
+        function animateCursor() {
+            cursorX += (mouseX - cursorX) * 0.2;
+            cursorY += (mouseY - cursorY) * 0.2;
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            follower.style.left = followerX - 4 + 'px';
+            follower.style.top = followerY - 4 + 'px';
+
+            requestAnimationFrame(animateCursor);
         }
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !counterAnimated) {
-                    counterAnimated = true;
-                    animateCounter();
+        animateCursor();
+
+        // Hover effects for cursor
+        const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-category');
+        hoverElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                follower.style.transform = 'scale(2)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+            });
+        });
+
+        // CV Modal functions
+        function openCVModal() {
+            const modal = document.getElementById('cvModal');
+            modal.classList.add('active');
+            document.getElementById('cvPassword').focus();
+            // Reset state
+            document.getElementById('modalForm').classList.remove('hide');
+            document.getElementById('modalSuccess').classList.remove('show');
+            document.getElementById('modalError').classList.remove('show');
+            document.getElementById('cvPassword').value = '';
+            document.getElementById('cvPassword').classList.remove('error');
+        }
+
+        function closeCVModal() {
+            const modal = document.getElementById('cvModal');
+            modal.classList.remove('active');
+        }
+
+        function verifyPassword() {
+            const input = document.getElementById('cvPassword');
+            const error = document.getElementById('modalError');
+            const form = document.getElementById('modalForm');
+            const success = document.getElementById('modalSuccess');
+
+            if (input.value === CV_PASSWORD) {
+                // Success - show success message
+                form.classList.add('hide');
+                success.classList.add('show');
+                
+                // Trigger download after a short delay
+                setTimeout(() => {
+                    downloadCV();
+                    // Close modal after download starts
+                    setTimeout(() => {
+                        closeCVModal();
+                    }, 1500);
+                }, 1000);
+            } else {
+                // Error - shake input
+                input.classList.add('error');
+                error.classList.add('show');
+                
+                setTimeout(() => {
+                    input.classList.remove('error');
+                }, 500);
+            }
+        }
+
+        function downloadCV() {
+            // Create a download link
+            const link = document.createElement('a');
+            link.href = CV_FILE_PATH;
+            link.download = 'El_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Enter key to submit password
+        document.getElementById('cvPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        // Close modal on outside click
+        document.getElementById('cvModal').addEventListener('click', (e) => {
+            if (e.target.id === 'cvModal') {
+                closeCVModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCVModal();
+            }
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
-        }, { threshold: 0.5 });
-        
-        observer.observe(vpnSection);
+        });
 
-        // Add scroll animation for nav
-        let lastScroll = 0;
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-category, .project-card, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Nav background on scroll
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.style.background = 'rgba(10, 10, 15, 0.95)';
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(13, 13, 13, 0.95)';
             } else {
-                nav.style.background = 'rgba(10, 10, 15, 0.8)';
+                nav.style.background = 'rgba(13, 13, 13, 0.8)';
             }
-            
-            lastScroll = currentScroll;
         });
     </script>
 </body>
